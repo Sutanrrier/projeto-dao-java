@@ -8,15 +8,15 @@ public class Departamento implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	private Integer id;
-	private String name;
+	private String nome;
 	
 	//Construtores
 	public Departamento() {
 		
 	}
-	public Departamento(Integer id, String name) {
+	public Departamento(Integer id, String nome) {
 		this.id = id;
-		this.name = name;
+		this.nome = nome;
 	}
 	
 	//Getters and Setters
@@ -26,11 +26,11 @@ public class Departamento implements Serializable {
 	public void setId(Integer id) {
 		this.id = id;
 	}
-	public String getName() {
-		return name;
+	public String getNome() {
+		return nome;
 	}
-	public void setName(String name) {
-		this.name = name;
+	public void setNome(String nome) {
+		this.nome = nome;
 	}
 	
 	//Hash-code e Equals
@@ -53,7 +53,7 @@ public class Departamento implements Serializable {
 	//toString
 	@Override
 	public String toString() {
-		return "Departamento [id=" + id + ", name=" + name + "]";
+		return "Departamento [id=" + id + ", name=" + nome + "]";
 	}
 
 }
