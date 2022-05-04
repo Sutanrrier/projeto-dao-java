@@ -33,7 +33,7 @@ public class Program {
 		
 		System.out.println("\nTESTE 4 - Insert Vendedor");
 		Vendedor vendedorNovo = new Vendedor(null, "Greg", "greg@gmail.com", new Date(), 4000.0, dep);
-		vendedorDao.insert(vendedorNovo);
+		//vendedorDao.insert(vendedorNovo);
 		System.out.println("Inserido! Novo Id = " + vendedorNovo.getId());
 		
 		System.out.println("\nTESTE 5 - Update Vendedor");
@@ -41,6 +41,10 @@ public class Program {
 		vendedor.setNome("Martha Wayne");
 		vendedorDao.update(vendedor);
 		System.out.println("UPDATE finalizado!");
+		
+		System.out.println("\nTESTE 6 - Delete Vendedor");	
+		vendedorDao.deleteById(9);
+		System.out.println("DELETE finalizado!");
 	}
 
 }
