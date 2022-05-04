@@ -32,9 +32,7 @@ public class DepartamentoDaoJDBC implements DepartamentoDao {
 	public void insert(Departamento obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement(
-				"INSERT INTO departament (dp_name) "
-				+ "VALUES (?)",
+			st = conn.prepareStatement("INSERT INTO department (dp_name) VALUES (?)",
 				Statement.RETURN_GENERATED_KEYS);
 			
 			st.setString(1, obj.getNome());
@@ -66,7 +64,7 @@ public class DepartamentoDaoJDBC implements DepartamentoDao {
 	public void update(Departamento obj) {
 		PreparedStatement st = null;
 		try {
-			st = conn.prepareStatement("UPDATE departamento SET dp_name = ? WHERE dp_id = ?");
+			st = conn.prepareStatement("UPDATE department SET dp_name = ? WHERE dp_id = ?");
 			
 			st.setString(1, obj.getNome());
 			st.setInt(2, obj.getId());
