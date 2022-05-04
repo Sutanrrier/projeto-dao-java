@@ -91,8 +91,40 @@ public class VendedorDaoJDBC implements VendedorDao {
 
 	@Override
 	public List<Vendedor> findAll() {
-		// TODO Auto-generated method stub
-		return null;
+		PreparedStatement st = null;
+		ResultSet rs = null;
+		try {
+			st = conn.prepareStatement(
+					"SELECT seller.*,department.dp_name as depname "
+					+ "FROM seller INNER JOIN department "
+					+ "ON seller.departmentid = department.dp_id "
+					+ "ORDER BY name_seller");
+			
+			rs = st.executeQuery();
+			
+			List<Vendedor> list = new ArrayList<>();
+			Map<Integer, Departamento> map = new HashMap<>();
+			
+			while(rs.next()) {
+				Departamento dep = map.get(rs.getInt("departmentid"));
+				
+				if(dep == null) {
+					dep = instantiateDepartamento(rs);
+					map.put(rs.getInt("departmentid"), dep);
+				}
+				
+				Vendedor obj = instantiateVendendor(rs, dep);
+				list.add(obj);
+			}
+			return list;
+		}
+		catch(SQLException e) {
+			throw new DbException(e.getMessage());
+		}
+		finally {
+			DB.closeStatement(st);
+			DB.closeResultSet(rs);
+		}
 	}
 
 	@Override
