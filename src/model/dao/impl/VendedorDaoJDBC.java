@@ -24,6 +24,24 @@ public class VendedorDaoJDBC implements VendedorDao {
 		this.conn = conn;
 	}
 	
+	private Vendedor instantiateVendendor(ResultSet rs, Departamento dep) throws SQLException {
+		Vendedor obj = new Vendedor();
+		obj.setId(rs.getInt("seller_id"));
+		obj.setNome(rs.getString("name_seller"));
+		obj.setEmail(rs.getString("email"));
+		obj.setDataNascimento(rs.getDate("birthdate"));
+		obj.setSalarioBase(rs.getDouble("basesalary"));
+		obj.setDepartamento(dep);
+		return obj;
+	}
+
+	private Departamento instantiateDepartamento(ResultSet rs) throws SQLException {
+		Departamento dep = new Departamento();
+		dep.setId(rs.getInt("departmentid"));
+		dep.setNome(rs.getString("depname"));
+		return dep;
+	}
+	
 	@Override
 	public void insert(Vendedor obj) {
 		PreparedStatement st = null;
@@ -97,7 +115,10 @@ public class VendedorDaoJDBC implements VendedorDao {
 					"DELETE FROM seller WHERE seller_id = ?");
 			st.setInt(1, id);
 			
-			st.executeUpdate();
+			int linhas = st.executeUpdate();
+			if (linhas == 0) {
+				throw new DbException("Erro! -> O id informado não existe na tabela");
+			}
 		}
 		catch(SQLException e) {
 			throw new DbException(e.getMessage());
@@ -136,24 +157,6 @@ public class VendedorDaoJDBC implements VendedorDao {
 			DB.closeResultSet(rs);
 		}
 		
-	}
-
-	private Vendedor instantiateVendendor(ResultSet rs, Departamento dep) throws SQLException {
-		Vendedor obj = new Vendedor();
-		obj.setId(rs.getInt("seller_id"));
-		obj.setNome(rs.getString("name_seller"));
-		obj.setEmail(rs.getString("email"));
-		obj.setDataNascimento(rs.getDate("birthdate"));
-		obj.setSalarioBase(rs.getDouble("basesalary"));
-		obj.setDepartamento(dep);
-		return obj;
-	}
-
-	private Departamento instantiateDepartamento(ResultSet rs) throws SQLException {
-		Departamento dep = new Departamento();
-		dep.setId(rs.getInt("departmentid"));
-		dep.setNome(rs.getString("depname"));
-		return dep;
 	}
 
 	@Override
